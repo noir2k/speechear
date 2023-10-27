@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+    <link href="https://webfontworld.github.io/SCoreDream/SCoreDream.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/css/main/common.css">
+    <link rel="stylesheet" href="/css/main/layout.css">
+    <link rel="stylesheet" href="/css/function/Function4.css">
+    <script src="/js/common/jquery-3.6.0.min.js"></script>
+    <script src="/js/common/jquery-ui.min.js"></script>
+    <script src="/js/function/Function4.js"></script>
+    <title>문장 순서화 하기</title>
+</head>
+<body>
+    <div class="platform_wrap">
+        <div class="top flexac">
+            <div class="left flexac">
+                <div class="logo">말귀연습</div>
+                <div class="nav_wrap">
+                    <ul class="flexac">
+                        <li><a href="/home/FunctionSelect" class="active">HOME</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="right">
+                <ul class="flexac">
+                    <form th:action="@{/logout}" method="post">
+                        <li><input type="submit" value="로그아웃" class="btn_global"></li>
+                    </form>
+                    <li><img src="/img/home/user.png" alt="유저" id = "user"></li>
+                </ul>
+            </div>
+        </div>
+        <div class="content_wrap sub id4">
+            <div class="text sub1 flex">
+                <div class="left">
+                    <div class="wrap flexac move_h1" onclick="returnToChapter()">
+                        <h1>04</h1>
+                        <h2>문장 순서화 하기</h2>
+                    </div>
+                    <h3 style="display:inline" class="bk" id="qnumber">1</h3>
+                    <h3 style="display:inline" class="bk">. 다음 문장을 다 듣고 순서를 맞춰보세요.</h3>
+                </div>
+            </div>
+            
+            <div class="correct_wrap">
+                <audio controls id = "audio0" hidden = true>
+                    <source src="" type="audio/mp3">
+                </audio>
+                <div class="long_box long_box_plus_page">
+                    <div class="play_wrap flex">
+                        <ul class="Plus_gnb" id = "content">
+                            <!-- 본문이 들어갈 부분 -->
+                        </ul>
+                    </div>
+                    <div id = "textArea" style="display:none">
+                    </div>
+                </div>
+            </div>
+            <div class="bottom_but">
+                <!-- 채점하기 누르기전 버튼 -->
+                <div class="bot_right1">
+                    <a href="javascript:changeButton()"><img src="/img/function/bnt_9.png" alt="문제풀기"></a>
+                </div>
+                <!-- 채점하기 누르고 난후 -->                    
+                <div class="bot_right2">
+                    <!-- 밑줄 주석 : 이전 내용 전체 다시 듣기 버튼 -->
+                    <!-- <a href="javascript:playAudioFile(0)"><img src="/img/function/bnt_4.png" alt="재생하기"></a> -->
+                    <a href="javascript:showAnswer()" style="opacity: 1;"><img src="/img/function/bnt_11.png" alt="정답보기"></a>
+                    <a href="javascript:Scoring(1)" id = "correctCheck"><img src="/img/function/bnt_7.png" alt="o"></a>
+                    <a href="javascript:Scoring(0)" id = "wrongCheck"><img src="/img/function/bnt_8.png" alt="x"></a>
+                    <a href="javascript:nextQuiz()" class="bot_right2_rimg" style="opacity: 1;"><img src="/img/function/bnt_10.png" alt="다음퀴즈보기"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- (공통) 내 정보 확인 팝업 -->
+    <div class="pop" style="display: none;">
+        <div class="user" th:each="string : ${member}">
+            <div class="photo"><img src="/img/home/user.png" alt=""></div>
+            <div class="name" th:text="${member[0]}"></div>
+            <div class="nb" th:text="${member[1]}"></div>
+            <input type="button" value="마이페이지" class="btn_global userbtn" onclick = "location.href='/home/MyPage'">
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="로그아웃" class="btn_global userbtn">
+            </form>
+        </div>
+    </div>
+    <!-- (훈련공통) 로딩 팝업 -->
+    <div class="wrap-loading" display-none>
+        <div><img src="/img/function/loading.gif" /></div>
+    </div>
+</body>
+</html>

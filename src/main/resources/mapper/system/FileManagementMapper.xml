@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ihab.speechear.dao.system.FileManagementDao">
+    <select id="getFileInfo" resultType = "kr.co.ihab.speechear.dto.system.FileManagementDto">
+        select
+            name,
+            extension,
+            file_path,
+            date_created,
+            date_modified
+        from
+            public.file_info
+        <if test = 'type != "default"'>
+        where
+            split_part(file_path,'\',7) = #{type}
+        </if>
+        ;
+    </select>
+</mapper>

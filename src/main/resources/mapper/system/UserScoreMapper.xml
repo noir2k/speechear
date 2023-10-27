@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ihab.speechear.dao.system.UserScoreDao">
+    <select id="getAssignedUser" parameterType = "String" resultType = "String">
+        SELECT
+            id
+        FROM
+            user_assignment
+        WHERE
+            manager = #{manager_id}
+        ;
+    </select>
+    <select id="getScore" parameterType = "kr.co.ihab.speechear.dto.system.UserScoreDto" resultType = "kr.co.ihab.speechear.dto.system.UserScoreDto">
+        SELECT
+            utp.user_id,
+            utt.training_name ,
+            utg.category_name ,
+            utp.training_chapter,
+            utc.chapter_length,
+            (utp.user_act * 100 / utc.chapter_length)  as act_percent,
+            uts.user_score 
+        FROM
+            public.user_training_progress utp
+        LEFT JOIN
+            public.user_training_chapter utc
+        ON
+            utp.training_id = utc.training_id AND
+            utp.training_category = utc.training_category AND
+            utp.training_chapter = utc.training_chapter 
+        LEFT JOIN
+            public.user_training_score uts
+        ON
+            utp.user_id = uts.user_id AND
+            utp.training_id = uts.training_id AND
+            utp.training_category = uts.training_category AND
+            utp.training_chapter = uts.training_chapter
+        LEFT JOIN
+            public.user_assignment ua 
+        ON
+            utp.user_id = ua.id
+        LEFT JOIN
+            public.user_training_type utt 
+        ON
+            utp.training_id = utt.training_id 
+        LEFT JOIN
+            public.user_training_group utg 
+        ON
+            utp.training_id = utg.training_id AND
+            utp.training_category = utg.training_category 
+        WHERE
+            ua.manager = #{manager_id} 
+            <if test = "user_id != 'default'">
+                AND utp.user_id = #{user_id}
+            </if>
+        ORDER by
+            utp.training_id ASC,
+            utp.training_category ASC,
+            utp.training_chapter ASC
+        ;
+    </select>
+</mapper>

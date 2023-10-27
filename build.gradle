@@ -1,0 +1,141 @@
+plugins {
+    id 'java'
+	id 'org.springframework.boot' version '3.1.5'
+	id 'io.spring.dependency-management' version '1.1.3'
+    id "org.springdoc.openapi-gradle-plugin" version "1.8.0"
+    id 'nu.studer.jooq' version '8.2.1'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'kr.co.ihab.speechear'
+version = '1.0.0-SNAPSHOT'
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+    configureEach {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+    }
+    test {
+        java {
+            srcDir 'src/test/java'
+        }
+    }
+}
+
+springBoot {
+    buildInfo()
+}
+
+jar {
+    enabled = false
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    implementation 'org.springframework.boot:spring-boot-starter-jooq'
+
+//	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter'
+    implementation 'commons-io:commons-io:2.11.0'
+
+    // springdoc
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+
+    // jwt
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    // log4j
+    implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+
+    jooqGenerator 'org.postgresql:postgresql:42.6.0'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'org.postgresql:postgresql'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+}
+
+tasks {
+    processResources {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    }
+}
+
+//tasks.named('test') {
+//	useJUnitPlatform()
+//}
+
+jooq {
+    // use jOOQ version defined in Spring Boot
+    version = dependencyManagement.importedProperties['jooq.version']
+    edition = nu.studer.gradle.jooq.JooqEdition.OSS
+
+    configurations {
+        main {
+            generationTool {
+                logging = org.jooq.meta.jaxb.Logging.WARN
+                jdbc {
+                    driver = 'org.postgresql.Driver'
+                    url = 'jdbc:postgresql://localhost:5432/dars'
+                    user = 'dars'
+                    password = 'dars!2#4'
+                    properties {
+                        property {
+                            key = 'PAGE_SIZE'
+                            value = 2048
+                        }
+                    }
+                }
+                generator {
+                    name = 'org.jooq.codegen.DefaultGenerator'
+                    strategy {
+                        name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+                    }
+                    database {
+                        name = 'org.jooq.meta.postgres.PostgresDatabase'
+                        inputSchema = 'public'
+                        unsignedTypes = false
+                        includes = '.*'
+                        excludes = ''
+                    }
+                    generate {
+                        deprecated = false
+                        records = true
+                        immutablePojos = true
+                        fluentSetters = true
+                    }
+                    target {
+                        packageName = 'kr.ac.dars.persistence.jooq'
+                        directory = 'build/generated/jooq'
+                    }
+                }
+            }
+        }
+    }
+}

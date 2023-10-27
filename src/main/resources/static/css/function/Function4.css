@@ -1,0 +1,94 @@
+.platform_wrap{
+    min-height: 900px;
+}
+.Plus_gnb{
+    padding-left: 0;
+}
+.correct_wrap .long_box .play_wrap .Plus_gnb li{
+    margin-left: 0;
+    vertical-align: middle;
+}
+.long_box_plus_page{
+    /* height: 492px; */
+    min-height: 492px;
+}
+.correct_wrap .plus_page_input{
+    font-family: 'Montserrat', sans-serif;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border: 1px solid #81a8b7;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #eef6f9;
+    margin-right: 20px;
+    display: inline-block;
+    vertical-align: text-top;
+}
+.correct_wrap .plus_page_input:focus{
+    outline: none;
+}
+.correct_wrap .plus_page_input:placeholder-shown{
+    border-color: red;
+}
+
+/* 4월 30일 */
+.play_gnb1{
+    margin-top: 30px;
+}
+.play_gnb1 li{
+    display: flex;
+    align-items: center;
+}
+.play_gnb1 li img{
+    width: 100%;
+    max-width: 45px;
+}
+.play_gnb1 li>a{
+    padding:5px 20px;
+    background-color: #63a4db;
+    display: inline-block;
+    margin-right: 15px;
+}
+.play_gnb1 li>span{
+    line-height: 45px;
+    display: block;
+    margin-right: 15px;
+}
+/* 04-30 하단 버튼 */
+.bottom_but{
+    margin-top: 20px;
+    display: flex;
+    position: relative;
+    height: 133px;
+}
+.bottom_but .bot_right1{
+    position: absolute;
+    right: 0;
+}
+.bottom_but .bot_left{
+    display: none;
+}
+.bottom_but .bot_right2{
+    display: none;
+    position: relative;
+    width: 100%;
+}
+.bottom_but .bot_right2 .bot_right2_rimg{
+    position: absolute;
+    right:0;
+}
+
+.content_wrap .bot_right2 a{
+    opacity: 0.6;
+}
+.content_wrap .bot_right2 a:hover{
+    opacity: 1;
+}
+.move_h1{
+    cursor: pointer;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none
+}

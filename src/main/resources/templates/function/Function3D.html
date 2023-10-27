@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://webfontworld.github.io/SCoreDream/SCoreDream.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/css/main/common.css">
+    <link rel="stylesheet" href="/css/main/layout.css">
+
+    <script src="/js/common/jquery-3.6.0.min.js"></script>
+    <script src="/js/common/jquery-ui.min.js"></script>
+    <script src="/js/function/Function3D.js"></script>
+    <title>긴 이야기 듣기</title>
+</head>
+<body>
+    <div class="platform_wrap">
+        <div class="top flexac">
+            <div class="left flexac">
+                <div class="logo">말귀연습</div>
+                <div class="nav_wrap">
+                    <ul class="flex">
+                        <li><a href="/home/FunctionSelect" class="active">HOME</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="right">
+                <ul class="flexac">
+                    <form th:action="@{/logout}" method="post">
+                        <li><input type="submit" value="로그아웃" class="btn_global"></li>
+                    </form>
+                    <li><img src="/img/home/user.png" alt="유저" id = "user"></li>
+                </ul>
+            </div>
+        </div>
+        <div class="content_wrap sub id3">
+            <div class="text sub2 flex">
+                <h1>03</h1>
+                <h2>긴 이야기 듣기</h2>
+            </div>
+            <div class="list_wrap2 flex">
+              <ul>
+                <a href="javascript:Category('J')">
+                    <li>요리</li>
+                </a>
+              </ul>
+              <ul>
+                <a href="javascript:Category('K')">
+                    <li>전통문화</li>
+                </a>
+              </ul>
+              <ul>
+                <a href="javascript:Category('L')">
+                    <li>스포츠</li>
+                </a>
+              </ul>
+              <ul>
+                <a href="javascript:Category('M')">
+                    <li class="mr0">세계의 잔치</li>
+                </a>
+              </ul>
+              <ul>
+                <a href="javascript:Category('N')">
+                    <li>속담</li>
+                </a>
+              </ul>
+              <ul>
+                <a href="javascript:Category('O')">
+                    <li>지역</li>
+                </a>
+              </ul>
+              <ul>
+                <a href="javascript:Category('P')">
+                    <li>세계유산</li>
+                </a>
+              </ul>
+              <ul>
+                <a href="javascript:Category('Q')">
+                    <li class="mr0">나라</li>
+                </a>
+              </ul>
+              <ul>
+                <a href="javascript:Category('R')">
+                    <li class="mb0">건강</li>
+                </a>
+              </ul>
+              <ul>
+                <a href="javascript:Category('S')">
+                    <li class="mb0">인물</li>
+                </a>
+              </ul>
+              <ul>
+                <a href="javascript:Category('T')">
+                    <li class="mb0">기타</li>
+                </a>
+              </ul>
+            </div>
+        </div>
+    </div>
+    <!-- (공통) 내 정보 확인 팝업 -->
+    <div class="pop" style="display: none;">
+        <div class="user" th:each="string : ${member}">
+            <div class="photo"><img src="/img/home/user.png" alt=""></div>
+            <div class="name" th:text="${member[0]}"></div>
+            <div class="nb" th:text="${member[1]}"></div>
+            <input type="button" value="마이페이지" class="btn_global userbtn" onclick = "location.href='/home/MyPage'">
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="로그아웃" class="btn_global userbtn">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

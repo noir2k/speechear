@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ihab.speechear.dao.function.Function1Dao">
+	<select id="getAudioInfo" parameterType = "kr.co.ihab.speechear.dto.function.Function1Dto" resultType = "kr.co.ihab.speechear.dto.function.Function1Dto">
+        SELECT
+            filename,
+            context
+        FROM
+            (
+                SELECT
+                    (ROW_NUMBER() OVER()) AS ROWNUM,
+                    index,
+                    filename,
+                    context
+                FROM
+                    public.function1
+                ORDER BY
+                    filename ASC
+            ) as f1
+        WHERE
+            ROWNUM
+            BETWEEN
+                ((#{chapter}*10)+1) AND
+            <choose>
+                <when test = "chapter == 99">
+                        (#{chapter}*10+13)
+                </when>
+                <otherwise>
+                        (#{chapter}*10+10)
+                </otherwise>
+            </choose>
+        ORDER BY
+            ROWNUM
+        ASC;
+	</select>
+</mapper>

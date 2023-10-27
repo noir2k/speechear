@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds">
+    <springProperty scope="context" name="LOG_LEVEL" source="logging.level.root"/>
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/spring/logback/logback-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{HH:mm:ss.SSS} [%-5level] - %msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="ROLLING"/>
+        <appender-ref ref="STDOUT" />
+    </root>
+
+<!--    <logger name="org.apache.ibatis" level="DEBUG" additivity="false">-->
+<!--        <appender-ref ref="ROLLING"/>-->
+<!--        <appender-ref ref="STDOUT"/>-->
+<!--    </logger>-->
+
+<!--    <logger name="jdbc" level="OFF"/>-->
+<!--    <logger name="jdbc.connection" level="OFF"/>-->
+    <logger name="jdbc.sqlonly" level="DEBUG" appender-ref="STDOUT"/>
+<!--    <logger name="jdbc.sqltiming" level="DEBUG"/>-->
+<!--    <logger name="jdbc.audit" level="OFF"/>-->
+<!--    <logger name="jdbc.resultset" level="OFF"/>-->
+    <logger name="jdbc.resultsettable" level="DEBUG" appender-ref="STDOUT"/>
+</configuration>

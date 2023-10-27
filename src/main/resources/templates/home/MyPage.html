@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://webfontworld.github.io/SCoreDream/SCoreDream.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/css/main/common.css">
+    <link rel="stylesheet" href="/css/main/layout.css">
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <script src="/js/common/jquery-3.6.0.min.js"></script>
+    <script src="/js/common/jquery-ui.min.js"></script>
+    <script src="/js/home/MyPage.js"></script>
+    <title>청각검사플랫폼</title>
+</head>
+<body>
+    <div class="platform_wrap">
+        <div class="top flexac">
+            <div class="left flexac">
+                <div class="logo">말귀연습</div>
+                <div class="nav_wrap">
+                    <ul class="flex">
+                        <li><a href="/home/FunctionSelect" class="active">HOME</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="right">
+                <ul class="flexac">
+                    <form th:action="@{/logout}" method="post">
+                        <li><input type="submit" value="로그아웃" class="btn_global"></li>
+                    </form>
+                    <li><img src="/img/home/user.png" alt="유저" id = "user"></li>
+                </ul>
+            </div>
+        </div>
+        <div class="info_tb">
+            <div class="tit">회원정보 수정</div>
+            <table>
+                <tr>
+                    <td>아이디(이메일)</td>
+                    <td th:text="${member[0]}">hong123</td>
+                </tr>
+                <tr>
+                    <td>이름</td>
+                    <td th:text="${member[1]}">홍길동</td>
+                </tr>
+                <tr>
+                    <td>전화번호</td>
+                    <td th:text="${member[2]}">010-1234-5678</td>
+                </tr>
+                <tr>
+                    <td>비밀번호변경</td>
+                    <td> 
+                        <div class="pw_wrap"> <p>현재비밀번호</p>  <input type="text"></div>
+                        <div class="pw_wrap"> <p>새비밀번호</p> <input type="text"></div>
+                        <div class="pw_wrap"> <p>비밀번호확인</p> <input type="text"></div>
+                        <input type="button" value="비밀번호변경" class="btn_global" style="font-weight: 800;">
+                    </td>
+                </tr>
+                <tr>
+                    <td>전역 설정</td>
+                    <td>
+                        소음의 종류&nbsp; : &nbsp;&nbsp;
+                        <select th:each = 'nt:${noiseType}' id = "noise_type" onchange="javascript:changeSetting()">
+                            <option th:selected="${nt == '기본'}">기본</option>
+                            <option th:selected="${nt == '길거리'}">길거리</option>
+                            <option th:selected="${nt == '식당'}">식당</option>
+                            <option th:selected="${nt == '와글와글'}">와글와글</option>
+                        </select><br><br>
+                        음원 재생 속도&nbsp; : &nbsp;&nbsp;
+                        <select th:each = 'ps:${playSpeed}' id = "play_speed" onchange="javascript:changeSetting()">
+                            <option th:selected="${ps == '느리게'}">느리게</option>
+                            <option th:selected="${ps == '조금 느리게'}">조금 느리게</option>
+                            <option th:selected="${ps == '보통'}">보통</option>
+                            <option th:selected="${ps == '조금 빠르게'}">조금 빠르게</option>
+                            <option th:selected="${ps == '빠르게'}">빠르게</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>CDkey 만료일</td>
+                    <td>2099.12.31</td>
+                </tr>
+                <tr sec:authorize ="hasAnyRole('SYSTEM','MANAGER')">
+                    <td>매니저 메뉴</td>
+                    <td>
+                        <input type="button" value="사용자 활동 내역" class="btn_global" style="background: rgb(207, 207, 207)" onclick="location.href='/system/UserActivity'">
+                        <input type="button" value="사용자 성적 내역" class="btn_global" style="background: rgb(207, 207, 207)" onclick="location.href='/system/UserScore'"><br>
+                        <!-- 확인 -->
+                        <input type="button" value="파일 관리" sec:authorize ="hasRole('SYSTEM')" class="btn_global" style="background: rgb(207, 207, 207)" onclick="location.href='/system/FileManagement'">
+                        <input type="button" value="로그 관리" sec:authorize ="hasRole('SYSTEM')" class="btn_global" onclick="location.href='/system/UserLog'" style="font-weight: 800;">
+                    </td>
+                </tr>
+         </table>
+        </div>
+    </div>
+    <!-- (공통) 내 정보 확인 팝업 -->
+    <div class="pop" style="display: none;">
+        <div class="user" th:each="string : ${member}">
+            <div class="photo"><img src="/img/home/user.png" alt=""></div>
+            <div class="name" th:text="${member[0]}"></div>
+            <div class="nb" th:text="${member[1]}"></div>
+            <input type="button" value="마이페이지" class="btn_global userbtn" onclick = "location.href='/home/MyPage'">
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="로그아웃" class="btn_global userbtn">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

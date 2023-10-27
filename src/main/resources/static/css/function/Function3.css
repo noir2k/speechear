@@ -1,0 +1,134 @@
+/* 2023-04-30 수정 */
+.content2_wrap{
+    background-color: #fff;
+    padding: 40px;
+    min-height: 500px;
+    /* 음원 대기 backgroundImg */
+    background:url(../../img/function/sound_bg.png) no-repeat 50% 90%;
+    background-size: 400px 400px;
+}
+.content2_s1{
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: bold;
+}
+.content2_s1 h2{
+    font-size: 26px;
+    /* font-weight: bold; */
+    color:#666;
+    line-height: 1.4;    
+}
+.content2_s2{
+    padding-left: 12px;
+    padding-right: 12px;
+}
+.content2_s2>li{
+    font-size: 26px;
+    margin-bottom: 30px;
+}
+.content2_s2>li h3{
+    color:#6ebcc8;
+    font-size: 28px;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+.content2_s2>li h3>a{
+    color:white;
+    font-size: 26px;
+    background-color: #6ebcc8;
+    text-align: center;
+    border-radius: 50%;
+    padding: 2px 5px 2px 12px;
+    margin-right: 15px;
+}
+.content2_s2>li>div{
+    display: flex;
+    
+}
+.content2_s2>li>div>a{
+    background-color: #63a4db;
+    border-radius: 30px;
+    width: 70px;
+    height: 37px;
+    text-align: center;
+    line-height: 43px;
+    margin-right: 6px;
+}
+.content2_s2>li>div>.content2_s2_text {
+    border-radius: 30px;
+    line-height: 37px;
+    background-color: #eff6fc;
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+.content2_s2>li>div>.content2_s2_text span{
+    font-size: 24px;
+    width: 88%;
+    color: #666;
+    padding-left: 18px;
+    display: none;
+}
+
+/* ox */
+.text_ox{
+    display: flex;
+    position: absolute;
+    right: 3px;
+    top: 0;
+    height: 32px;
+    line-height: 32px;
+    margin-top: 2px;
+}
+.text_ox li a{
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+    display: block;
+}
+.text_ox li:hover{
+    opacity: 1;
+}
+.text_ox li{
+    width: 50px;
+    text-align: center;
+    opacity: 0.6;
+}
+.text_ox li:nth-of-type(1){
+    color: white;
+    background-color: #f59cb3;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+.text_ox li:nth-of-type(2){
+    background-color: #6ebcc8;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+/* 숨김 ox버튼 */
+.text_ox{
+    display: none;
+}
+
+.move_h1{
+    cursor: pointer;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none
+}
+/* 23-06-22 제출하기버튼 */
+.sound_bottom_but{
+    display: flex;
+    justify-content: end;
+    margin-top: 35px;
+}
+.sound_bottom_but a{
+    opacity: 0.6;
+}
+
+.sound_bottom_but a:hover{
+    opacity: 1;
+}

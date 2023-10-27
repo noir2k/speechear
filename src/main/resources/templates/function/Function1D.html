@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://webfontworld.github.io/SCoreDream/SCoreDream.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/css/main/common.css">
+    <link rel="stylesheet" href="/css/main/layout.css">
+
+    <script src="/js/common/jquery-3.6.0.min.js"></script>
+    <script src="/js/common/jquery-ui.min.js"></script>
+    <script src="/js/function/Function1D.js"></script>
+    <title>소음 하 문장듣기</title>
+</head>
+<body>
+    <div class="platform_wrap">
+        <div class="top flexac">
+            <div class="left flexac">
+                <div class="logo">말귀연습</div>
+                <div class="nav_wrap">
+                    <ul class="flex">
+                        <li><a href="/home/FunctionSelect" class="active">HOME</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="right">
+                <ul class="flexac">
+                    <form th:action="@{/logout}" method="post">
+                        <li><input type="submit" value="로그아웃" class="btn_global"></li>
+                    </form>
+                    <li><img src="/img/home/user.png" alt="유저" id = "user"></li>
+                </ul>
+            </div>
+        </div>
+        <div class="content_wrap sub ">
+            <div class="text sub2 flex">
+                <h1>01</h1>
+                <h2>소음 하 문장듣기</h2>
+                <!-- <h3>(엑셀 화일 문장세트 모음)</h3> -->
+            </div>
+            <div class="list_wrap1 flex">
+                <ul>
+                    <li>
+                        <a href="javascript:Level(1)" class="flex">
+                            <p class="num">기초</p>
+                            <p class="sup">소음이 없는
+                                </br>조용한 상황
+                                </br>(Quiet 상황)
+                                </br>
+                                </br>
+                            </p>
+                        </a>
+                    </li>
+                    <a href="javascript:Level(1)">
+                    <li class="flex"><p>이동하기</p><img src="/img/function/move_arrow.svg" alt="이동"><img src="/img/function/move_arrow_off.svg" alt="이동"></li>
+                    </a>
+                </ul>
+                <ul>
+                    <li>
+                        <a href="javascript:Level(2)" class="flex">
+                            <p class="num">난이도 하</p>
+                            <p class="sup">소음이 조금 있는 상황
+                                </br>(선풍기, 에어컨
+                                </br>소리 정도의 소음)
+                                </br>(6 dB SNR)
+                            </p>
+                        </a>
+                    </li>
+                    <a href="javascript:Level(2)">
+                    <li class="flex"><p>이동하기</p><img src="/img/function/move_arrow.svg" alt="이동"><img src="/img/function/move_arrow_off.svg" alt="이동"></li>
+                    </a>
+                </ul>
+                <ul>
+                    <li>
+                        <a href="javascript:Level(3)" class="flex">
+                            <p class="num">난이도 중</p>
+                            <p class="sup">주변 소음이 보통이 상황
+                                </br>(생활환경에서의
+                                </br>소음 정도)
+                                </br>(3 dB SNR)
+                            </p>
+                        </a>
+                    </li>
+                    <a href="javascript:Level(3)">
+                    <li class="flex"><p>이동하기</p><img src="/img/function/move_arrow.svg" alt="이동"><img src="/img/function/move_arrow_off.svg" alt="이동"></li>
+                    </a>
+                </ul>
+                <ul>
+                    <li>
+                        <a href="javascript:Level(4)" class="flex">
+                            <p class="num">난이도 상</p>
+                            <p class="sup">주변이 시끄러운 상황
+                              </br>(찻길정도의 소음)
+                                </br>(0 dB SNR)
+                                </br>
+                                </br>
+                            </p>
+                        </a>
+                    </li>
+                    <a href="javascript:Level(4)">
+                    <li class="flex"><p>이동하기</p><img src="/img/function/move_arrow.svg" alt="이동"><img src="/img/function/move_arrow_off.svg" alt="이동"></li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- (공통) 내 정보 확인 팝업 -->
+    <div class="pop" style="display: none;">
+        <div class="user" th:each="string : ${member}">
+            <div class="photo"><img src="/img/home/user.png" alt=""></div>
+            <div class="name" th:text="${member[0]}"></div>
+            <div class="nb" th:text="${member[1]}"></div>
+            <input type="button" value="마이페이지" class="btn_global userbtn" onclick = "location.href='/home/MyPage'">
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="로그아웃" class="btn_global userbtn">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ihab.speechear.dao.system.UserLogDao">
+	<insert id="insertUserLog" parameterType = "kr.co.ihab.speechear.dto.system.UserLogDto">
+        INSERT INTO
+            public.user_log
+        (
+            access_ip,
+            access_id,
+            access_time,
+            access_role,
+            access_uri
+        )
+        VALUES
+        (
+            #{access_ip},
+            #{access_id},
+            #{access_time},
+            #{access_role},
+            #{access_uri}
+        );
+	</insert>
+    <select id="getUserList" resultType = "String">
+        SELECT
+            user_id
+        FROM
+            user_roles
+        ;
+    </select>
+    <select id="getUserLog" parameterType = "kr.co.ihab.speechear.dto.system.UserLogDto" resultType = "kr.co.ihab.speechear.dto.system.UserLogDto">
+        SELECT
+            access_ip,
+            access_id,
+            access_time,
+            access_role,
+            access_uri
+        FROM
+            public.user_log
+        <if test = "access_id != 'default'">
+            WHERE
+                access_id = #{access_id}
+        </if>
+        ;
+    </select>
+</mapper>

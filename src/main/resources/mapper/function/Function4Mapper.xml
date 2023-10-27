@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ihab.speechear.dao.function.Function4Dao">
+    <select id="getFirstInfo" parameterType = "kr.co.ihab.speechear.dto.function.Function4Dto" resultType = "kr.co.ihab.speechear.dto.function.Function4Dto">
+        SELECT
+            index
+        FROM
+            (
+                SELECT
+                    (ROW_NUMBER() OVER(order by index asc)) AS ROWNUM,index
+                FROM
+                    function4
+                GROUP BY
+                    index
+                HAVING
+                    COUNT(index) = #{level}
+                ORDER BY
+                    index asc
+            ) as temp
+        WHERE
+            rownum
+        BETWEEN
+            <choose>
+                <when test = "level == 3 and chapter == 14">
+                    ((#{chapter}*5)+1) AND
+                    (#{chapter}*5+7)
+                </when>
+                <otherwise>
+                    ((#{chapter}*5)+1) AND
+                    (#{chapter}*5+5)
+                </otherwise>
+            </choose>
+        ORDER BY
+            rownum
+        ASC
+        ;
+    </select>
+	<select id="getAudioInfo" parameterType = "String" resultType = "kr.co.ihab.speechear.dto.function.Function4Dto">
+        SELECT
+            index,
+            filename,
+            context
+        FROM
+            public.function4
+        WHERE 
+            index = #{index}
+        ;
+	</select>
+</mapper>

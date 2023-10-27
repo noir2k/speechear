@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ihab.speechear.dao.function.Function2Dao">
+	<select id="getAudioInfo" parameterType = "kr.co.ihab.speechear.dto.function.Function2Dto" resultType = "kr.co.ihab.speechear.dto.function.Function2Dto">
+        SELECT
+            speechcode,
+            speechcontext,
+            questioncode,
+            questioncontext,
+            answer
+        FROM
+            (
+                SELECT
+                    (ROW_NUMBER() OVER(ORDER BY speechcode)) as ROWNUM,
+                    speechcode,
+                    speechcontext,
+                    questioncode,
+                    questioncontext,
+                    answer
+                FROM
+                    public.function2
+                WHERE
+                    <if test = 'category != "T"'>
+                    substring(speechcode::varchar,0,2) = #{category}
+                    </if>
+                    <if test = 'category == "T"'>
+                    substring(speechcode::varchar,0,2) = #{category} or
+                    substring(speechcode::varchar,0,2) = 'W'
+                    </if>
+            ) as f1
+        WHERE
+            ROWNUM
+        BETWEEN
+            ((#{chapter}*5)+1) AND
+            (#{chapter}*5+5)
+        ORDER BY
+            speechcode
+        ASC
+        ;
+    </select>
+</mapper>

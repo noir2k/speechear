@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ihab.speechear.dao.system.UserActivityDao">
+    <insert id="insertUserActivity" parameterType = "kr.co.ihab.speechear.dto.system.UserActivityDto">
+        INSERT INTO
+            public.user_activity
+        (
+            id,
+            activity,
+            activity_time,
+            activity_date
+        )
+        VALUES
+        (
+            #{user_id},
+            #{activity},
+            #{activity_time},
+            NOW()
+        );
+	</insert>
+    <select id="getAssignedUser" parameterType = "String" resultType = "String">
+        SELECT
+            id
+        FROM
+            user_assignment
+        WHERE
+            manager = #{manager_id}
+        ;
+    </select>
+    <select id="getUserActivity" parameterType="kr.co.ihab.speechear.dto.system.UserActivityDto" resultType = "kr.co.ihab.speechear.dto.system.UserActivityDto">
+        SELECT
+            ua.id AS user_id,
+            CASE ua2.activity WHEN 'Function1' THEN '소음 하 문장듣기'
+                              WHEN 'Function2' THEN '짧은 이야기 듣기'
+                              WHEN 'Function3' THEN '긴 이야기 듣기'
+                              WHEN 'Function4' THEN '문장 순서화 하기'
+                              WHEN 'Function5' THEN '가로세로 퀴즈' END AS activity,
+            ua2.activity_time AS activity_time,
+            ua2.activity_date AS activity_date
+        FROM
+            user_assignment ua,
+            user_activity ua2 
+        WHERE
+            ua.id = ua2.id AND
+            ua.manager = #{manager_id}
+            <if test = "user_id != 'default'">
+                AND ua.id = #{user_id}
+            </if>
+        ;
+    </select>
+</mapper>

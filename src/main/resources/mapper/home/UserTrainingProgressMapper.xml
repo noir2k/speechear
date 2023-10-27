@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ihab.speechear.dao.home.UserTrainingProgressDao">
+    <select id="getUTC" resultType = "kr.co.ihab.speechear.dto.home.UserTrainingProgressDto">
+        SELECT
+            *
+        FROM
+            public.user_training_chapter
+        ;
+    </select>
+    <insert id="setUTP" parameterType = "java.util.List">
+        INSERT INTO
+            public.user_training_progress
+        (
+            user_id,
+            training_id,
+            training_category,
+            training_chapter,
+            user_act
+        )
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+                #{item.user_id},
+                #{item.training_id},
+                #{item.training_category},
+                #{item.training_chapter},
+                0  
+            )
+        </foreach>
+        ;
+    </insert>
+    <select id="getUTP" parameterType = "String" resultType = "kr.co.ihab.speechear.dto.home.UserTrainingProgressDto">
+        SELECT
+            utp.user_id,
+            utp.training_id,
+            utp.training_category,
+            utp.training_chapter,
+            utc.chapter_length,
+            utp.user_act
+        FROM
+            public.user_training_progress utp
+        LEFT JOIN
+            public.user_training_chapter utc
+        ON
+            utp.training_id = utc.training_id AND
+            utp.training_category = utc.training_category AND
+            utp.training_chapter = utc.training_chapter 
+        WHERE
+            utp.user_id = #{user_id} AND
+            utp.training_id = #{training_id}
+            <if test = "training_id != 'f1' and training_id != 'f5'">
+                AND utp.training_category = #{training_category}
+            </if>
+        ORDER BY
+            utp.training_chapter
+        ASC
+        ;
+    </select>
+    <update id = "saveUTP" parameterType = "kr.co.ihab.speechear.dto.home.UserTrainingProgressDto">
+        UPDATE
+            public.user_training_progress
+        SET
+            user_act = #{user_act}
+        WHERE
+            user_id = #{user_id} AND
+            training_id = #{training_id} AND
+            training_category = #{training_category} AND
+            training_chapter = #{training_chapter}
+        ;
+    </update>
+</mapper>

@@ -1,0 +1,42 @@
+/* 2023-04-30 수정 */
+.content_wrap.sub .text.sub1{
+    height: 132px;
+}
+/* 하단 왼쪽 버튼 */
+.content_wrap .bottom_but {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.content_wrap .bottom_but a{
+    opacity: 0.6;
+}
+.content_wrap .bottom_but a:hover{
+    opacity: 1;
+}
+.move_h1{
+    cursor: pointer;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none
+}
+
+/* 2023-06-17 구조변경 */
+.correct_wrap{
+    width: 70%;
+    margin: 0 auto;
+}
+.correct_function1{
+    position: relative;
+}
+.correct_function1>span:nth-of-type(1){
+    position: absolute;
+    left: -20%;
+    top:50px
+}
+.correct_function1>span:nth-of-type(2){
+    position: absolute;
+    right:-20%;
+    top:50px
+}

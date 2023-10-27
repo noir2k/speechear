@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ihab.speechear.dao.function.Function5Dao">
+	<select id = "loadFile" parameterType = "kr.co.ihab.speechear.dto.function.Function5Dto" resultType = "kr.co.ihab.speechear.dto.function.Function5Dto">
+        SELECT
+            index,
+            col,
+            row,
+            cnt,
+            nullpoint,
+            horizontal,
+            vertical,
+            existpoint,
+            context
+        FROM
+            public.function5_1
+        WHERE
+            index = #{index}
+        ;
+	</select>
+    <select id = "getAudioList" parameterType = "kr.co.ihab.speechear.dto.function.Function5Dto" resultType = "String">
+        SELECT
+            filename
+        FROM
+            public.function5_2
+        WHERE
+            split_part(filename,'-',1) = cast(#{index} as TEXT) and
+            context != 'null'
+        ;
+    </select>
+</mapper>

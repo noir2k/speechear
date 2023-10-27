@@ -1,0 +1,145 @@
+/* 내비게이션바 */
+#progress {
+    appearance: none;
+    width: 90%;
+}
+#progress::-webkit-progress-bar {
+    background:#f0f0f0;
+    border-radius:30px;
+    box-shadow: inset 3px 3px 10px #ccc;
+}
+#progress::-webkit-progress-value {
+    border-radius:30px;
+    background: #1D976C;
+    background: -webkit-linear-gradient(to right, #75ceb9, #62a0de);
+    background: linear-gradient(to right, #75ceb9, #62a0de);
+
+}
+.content_wrap{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.content_wrap .text_navi{
+    display: flex;
+    /* padding-right: 100px; */
+}
+.content_wrap .text_navi li a{
+    display:block;
+    font-size: 28px;
+    margin-right: 20px;
+    background-color: l;
+    padding: 5px 12px;
+}
+.content_wrap .text_navi li a:hover{
+    background-color: #63a4db;
+    color: white;
+    border-radius: 50%;
+}
+.content_wrap .text_navi li .on{
+    background-color: #63a4db;
+    color: white;
+    border-radius: 50%;
+}
+.platform_wrap .list_wrap1{
+    display: flex;
+    width: 85%;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+.platform_wrap .list_wrap1 .list_wrap1_progress{
+    width: 100%;
+    display: none
+}
+/* 표 제목 */
+.list_wrap1_progress_gnb1{
+    display: flex;
+    text-align: center;
+    font-weight: bold;
+}
+.list_wrap1_progress_gnb1 li{
+    height: 70px;
+    line-height: 70px;
+    color: #666;
+    font-size: 30px;
+    background-color: #fff;
+    border: 2px solid #cccccf;
+    border-bottom:0;
+}
+.list_wrap1_progress_gnb1 li:nth-of-type(1){
+    width: 8%;
+    border-right: 0;
+}
+.list_wrap1_progress_gnb1 li:nth-of-type(2){
+    width: 80%;
+    border-right: 0;
+}
+.list_wrap1_progress_gnb1 li:nth-of-type(3){
+    width: 12%;
+}
+/* 표 첫줄 */
+.list_wrap1_progress_gnb2{
+    display: flex;
+}
+.list_wrap1_progress_gnb2 li{
+    height: 70px;
+    line-height: 70px;
+    color: #666;
+    /* font-size: 30px; */
+    font-size: 24px;
+    background-color: #fff;
+    text-align: center;
+    border: 2px solid #cccccf;
+    border-bottom: 0;
+    font-weight: bold;
+}
+.list_wrap1_progress_gnb2 li:nth-of-type(1){
+    width: 8%;
+    border-right: 0;
+    color: #75CDB9;
+}
+.list_wrap1_progress_gnb2 li:nth-of-type(2){
+    width: 80%;
+    border-right: 0;
+    position: relative;
+    text-align: left;
+    padding-left: 2%;
+}
+.list_wrap1_progress_gnb2 li:nth-of-type(2) span{
+    display:block;
+    position: absolute;
+    /* right: 2.5%; */
+    right: 1%;
+    top: 0;
+}
+.list_wrap1_progress_gnb2 li:nth-of-type(3){
+    width: 12%;
+}
+.list_wrap1_progress_last{
+    border-bottom: 2px solid #cccccf;
+}
+.list_wrap1_progress_gnb2 li:nth-of-type(3) a{
+    color: black;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.list_wrap1_progress_gnb2 li:nth-of-type(3) a{
+    font-size: 22px;
+}
+.list_wrap1_progress_gnb2 li:nth-of-type(3) a img{
+    width: 100%;
+    max-width: 28px;
+    margin-right: 1%;
+}
+/* 공통 */
+.platform_wrap .list_wrap1 .list_wrap1_progress{
+    border-bottom: 2px solid #cccccf;
+}
+
+
+/* 1번 */
+.platform_wrap .list_wrap1 .pro_sub1{
+    display: block;
+}

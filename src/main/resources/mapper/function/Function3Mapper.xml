@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ihab.speechear.dao.function.Function3Dao">
+	<select id="getAudioInfo" parameterType = "kr.co.ihab.speechear.dto.function.Function3Dto" resultType = "kr.co.ihab.speechear.dto.function.Function3Dto">
+        select
+            f1.speechcode,
+            f2.speechcontext,
+            f1.questioncontext,
+            f1.answer
+        from
+            public.function3_2 f2
+        left join
+            public.function3_1 f1
+        on
+            f2.speechcode = f1.speechcode
+        where
+            substring(f1.speechcode::varchar,0,3) = #{code}
+        ;
+	</select>
+</mapper>

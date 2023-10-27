@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ihab.speechear.dao.home.UserTrainingScoreDao">
+    <insert id="setUTS" parameterType = "java.util.List">
+        INSERT INTO
+            public.user_training_score
+        (
+            user_id,
+            training_id,
+            training_category,
+            training_chapter,
+            user_score
+        )
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+                #{item.user_id},
+                #{item.training_id},
+                #{item.training_category},
+                #{item.training_chapter},
+                0
+            )
+        </foreach>
+        ;
+    </insert>
+    <update id = "saveUTS" parameterType = "kr.co.ihab.speechear.dto.home.UserTrainingScoreDto">
+        UPDATE
+            public.user_training_score
+        SET
+            user_score = #{user_score}
+        WHERE
+            user_id = #{user_id} AND
+            training_id = #{training_id} AND
+            training_category = #{training_category} AND
+            training_chapter = #{training_chapter}
+        ;
+    </update>
+</mapper>

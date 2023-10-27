@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ihab.speechear.dao.home.UserSettingDao">
+    <insert id = "setUS" parameterType = "String">
+        INSERT INTO
+            public.user_setting
+        (
+            user_id,
+            noise_type,
+            play_speed
+        )
+        VALUES
+        (
+            #{user_id},
+            '기본',
+            '보통'
+        )
+    </insert>
+    <select id = "getUS" parameterType = "String" resultType = "kr.co.ihab.speechear.dto.home.UserSettingDto">
+        SELECT
+            noise_type,
+            play_speed
+        FROM
+            public.user_setting
+        WHERE
+            user_id = #{user_id}
+        ;
+    </select>
+    <update id = "saveUS" parameterType = "kr.co.ihab.speechear.dto.home.UserSettingDto">
+        UPDATE 
+            public.user_setting
+        SET
+            noise_type = #{noise_type},
+            play_speed = #{play_speed}
+        WHERE
+            user_id = #{user_id}
+        ;
+    </update>
+</mapper>

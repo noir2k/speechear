@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" href="/font/scoredream.css" />
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable-gov.css" />
+<!--    <link href="/font/pretendardvariable.css" rel="stylesheet" />-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+
+    <link rel="stylesheet" href="/css/main/common.css" />
+    <link rel="stylesheet" href="/css/main/layout.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <link rel="stylesheet" href="/css/normalize.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.1.0/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+
+    <title>로그인</title>
+  </head>
+  <body>
+    <div class="login_root">
+      <div class="login_page transition_1">
+        <div class="img_main_logo">
+          <img class="main_logo" onclick="nextPage(0, 1);" src="/img/home/logo.png" alt="SpeechEar_Logo" />
+        </div>
+      </div>
+<!--    <div class="login_page transition_2">-->
+<!--      <div class="img_circle_ear">-->
+<!--        <img src="/img/home/circle_ear.png" alt="CircleEar"/>-->
+<!--      </div>-->
+<!--      <div class="circle_ear_title">-->
+<!--        <span>과학적인 말귀연습으로</span>-->
+<!--        <span>일상에 건강한 말귀를</span>-->
+<!--      </div>-->
+<!--      <div class="btn_div_bottom">-->
+<!--        <button class="btn_next_page" onclick="nextPage(1, 2);">다음</button>-->
+<!--      </div>-->
+<!--    </div>-->
+      <div class="login_page transition_3">
+        <div class="img_circle_logo">
+          <img class="circle_logo" src="/img/home/circle_logo.png" alt="CircleLogo"/>
+          <img class="circle_logo_center" src="/img/home/circle_logo_center.png" alt="CircleLogo_Mob"/>
+        </div>
+        <div class="form_area">
+          <form id="loginForm" th:action="@{/login}" method="post">
+            <div class="form_group">
+              <input type="text" class="form_style" name="username" placeholder="아이디을 입력해주세요" autocomplete="off">
+              <i class="input_icon icon_account"></i>
+            </div>
+            <div class="form_group">
+              <input type="password" class="form_style" name="password" placeholder="비밀번호를 입력해주세요" autocomplete="off">
+              <i class="input_icon icon_password"></i>
+            </div>
+            <div class="auth_error">
+              <span>로그인 오류 : 아이디 또는 비밀번호를 확인해주세요</span>
+            </div>
+            <!--          <div class="btn_login_bottom">-->
+            <!--            <input type="submit" value="로그인" class="btn_login" />-->
+            <!--          </div>-->
+            <div class="btn_login_bottom">
+              <button type="submit" class="btn_login" id="signIn">
+                로그인
+              </button>
+            </div>
+            <div class="account_link">
+              <div>
+                <span><a href="#">비밀번호를 잊으셨습니까?</a></span>
+              </div>
+              <div>
+                <span><a href="/signUp">계정만들기</a></span>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="text_div_bottom">
+        <div class="text_edition">
+          <span>Speech Ear v0.0.1b</span>
+        </div>
+        <div class="text_volume_cert">
+          <span>ⓒ iHAB Corporation all rights reserved.</span>
+        </div>
+      </div>
+    </div>
+    <script>
+      $(document).ready(function() {
+        $('.auth_error').hide();
+        $('#signIn').on('click', function (e) {
+            e.preventDefault();
+            $('.auth_error').hide();
+            $.ajax({
+                url: "/loginFormData",
+                type: 'POST',
+                beforeSend: function(xhr) {
+                    xhr.withCredentials = true;
+                    const token = $("meta[name='_csrf']").attr("content");
+                    const header = $("meta[name='_csrf_header']").attr("content");
+                    xhr.setRequestHeader(header, token);
+                },
+                data: $('#loginForm').serialize(),
+                success: function (response){
+                    // console.log(response);
+                    location.href = '/home/FunctionSelect';
+                },
+                error: function (res, status){
+                    // console.log(res);
+                    $('.auth_error').show();
+                }
+            });
+        });
+        setTimeout(function() {
+            const x = window.innerWidth / 2;
+            const y = window.innerHeight / 2;
+            transitionPage(0, 1, x, y);
+        }, 700);
+      })
+      function nextPage(curr, next) {
+          const x = window.innerWidth / 2;
+          const y = window.innerHeight / 2;
+          transitionPage(curr, next, x, y);
+      }
+
+      function transitionPage(curr, next, x, y) {
+          $('.login_page:eq('+ next +')').css('z-index', parseInt($('.login_page:eq('+ curr +')').css('z-index')) + 1);
+          $('.login_page:eq('+ next +')').css('clip-path', 'circle(0% at '+ x +'px '+ y +'px)');
+
+          anime({
+              targets: $('.login_page')[next],
+              update: function(anim) {
+                  $('.login_page:eq('+ next +')').css('clip-path', 'circle('+ (anim.progress*2) +'% at '+ x +'px '+ y +'px)');
+              }
+          });
+      }
+    </script>
+  </body>
+</html>
