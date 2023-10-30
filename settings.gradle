@@ -1,1 +1,3 @@
 rootProject.name = 'speechear'
+include 'api'
+include 'generated-jooq'

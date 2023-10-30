@@ -1,0 +1,99 @@
+###############################################################################
+# Default                                                                     #
+###############################################################################
+spring:
+  profiles:
+    active: local
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      data-source-properties:
+        ssl: false
+      idle-timeout: 10000
+      connection-timeout: 10000
+      validation-timeout: 10000
+      max-lifetime: 590000
+      maximum-pool-size: 16
+      register-mbeans: true
+      #      connectionTestQuery : SELECT 1
+      pool-name: HikariPool_SpeechEar
+      driver-class-name: 'org.postgresql.Driver'
+  data:
+    rest:
+      base-path: /api
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        format_sql: true
+        ddl-auto: validate
+    show-sql: false
+    generate-ddl: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+  use-management-port: true
+
+management:
+  server:
+    port: 8088
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: openapi, swagger-ui
+
+server:
+  port: 8080
+  servlet:
+    session:
+      timeout: 7200
+
+logging:
+  #  config: classpath:logback-spring.xml
+  level:
+    root: info
+    kr.ac.dars: debug
+
+###############################################################################
+# LOCAL Profile                                                               #
+###############################################################################
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+speechear:
+  static-url: 'http://localhost/static/'
+
+###############################################################################
+# LOCAL-docker Profile                                                               #
+###############################################################################
+---
+spring:
+  devtools:
+    add-properties: false
+  config:
+    activate:
+      on-profile: local-docker
+
+speechear:
+  static-url: "http://nginx-proxy/static/"
+###############################################################################
+# PRODUCTION Profile                                                               #
+###############################################################################
+---
+spring:
+  devtools:
+    add-properties: false
+  config:
+    activate:
+      on-profile: prod
+
+speechear:
+  static-url: "http://nginx-proxy/static/"
+

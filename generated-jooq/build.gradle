@@ -1,0 +1,85 @@
+plugins {
+    id 'nu.studer.jooq' version '8.2.1'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-jooq'
+
+    jooqGenerator 'org.postgresql:postgresql'
+}
+
+jooq {
+    // use jOOQ version defined in Spring Boot
+    version = dependencyManagement.importedProperties['jooq.version']
+    edition = nu.studer.gradle.jooq.JooqEdition.OSS
+
+    configurations {
+        main {
+            generationTool {
+                logging = org.jooq.meta.jaxb.Logging.WARN
+                jdbc {
+                    driver = 'org.postgresql.Driver'
+                    url = 'jdbc:postgresql://localhost:5432/dars'
+                    user = 'dars'
+                    password = 'dars!2#4'
+                    properties {
+                        property {
+                            key = 'PAGE_SIZE'
+                            value = 2048
+                        }
+                    }
+                }
+                generator {
+                    name = 'org.jooq.codegen.DefaultGenerator'
+                    strategy {
+                        name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+                    }
+                    database {
+                        name = 'org.jooq.meta.postgres.PostgresDatabase'
+                        inputSchema = 'public'
+                        unsignedTypes = false
+                        includes = '.*'
+                        excludes = ''
+                    }
+                    generate {
+                        deprecated = false
+                        indexes = true
+                        relations = true
+                        sequences = true
+                        keys = true
+                        tables = true
+
+                        udts = true
+                        records = true
+                        interfaces = false
+                        daos = false
+
+                        pojos = true
+                        pojosEqualsAndHashCode = true
+                        pojosToString = false
+                        immutablePojos = false
+                        serializablePojos = true
+                        fluentSetters = true
+
+                        javaTimeTypes = true
+
+                        /* Annotations */
+                        generatedAnnotation = true
+                        jpaAnnotations = false
+                        // POJO validation annotations JSR-303
+//                        validationAnnotations = false
+
+                        // Spring Annotations for DAOs
+                        springAnnotations = true
+                    }
+                    target {
+                        packageName = 'kr.co.ihab.speechear.persistence.jooq'
+                        directory = 'src/main/java'
+                        encoding = 'UTF-8'
+                        locale = 'ko_KR'
+                    }
+                }
+            }
+        }
+    }
+}
