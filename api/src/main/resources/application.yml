@@ -47,7 +47,7 @@ management:
         include: openapi, swagger-ui
 
 server:
-  port: 8080
+  port: 8081
   servlet:
     session:
       timeout: 7200
@@ -56,7 +56,8 @@ logging:
   #  config: classpath:logback-spring.xml
   level:
     root: info
-    kr.ac.dars: debug
+    jooq: debug
+    kr.co.ihab.speechear: debug
 
 ###############################################################################
 # LOCAL Profile                                                               #

@@ -3,8 +3,6 @@ plugins {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-jooq'
-
     jooqGenerator 'org.postgresql:postgresql'
 }
 

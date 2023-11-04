@@ -1,9 +1,9 @@
 package kr.co.ihab.speechear.api.service;
 
-import kr.co.ihab.speechear.api.dto.function.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +14,12 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Random;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class AudioInfoService {
+    private final DSLContext dslContext;
+
     @Value("${speechear.static-url}")
     private String staticUrl;
     static final String FUNC1 = "function1";
@@ -45,9 +46,10 @@ public class AudioInfoService {
     }
 
     // for func1
-    public List<Function1Dto> getAudioInfo(Function1Dto dto, String user_id) {
-        return new ArrayList<>();
+//    public List<Function1Dto> getAudioInfo(Function1Dto dto, String user_id) {
+//        return new ArrayList<>();
 //        List<Function1Dto> result = func1Dao.getAudioInfo(dto);
+//        return new ArrayList<>();
 //
 //        for (Function1Dto r : result) {
 //            r.setAudio(getAudioFileUrl(r.getFilename(), FUNC1));
@@ -76,20 +78,20 @@ public class AudioInfoService {
 //        }
 //
 //        return result;
-    }
+//    }
 
-    private Function1Dto getNoise(String noiseFileName) {
-        return new Function1Dto();
+//    private Function1Dto getNoise(String noiseFileName) {
+//        return new Function1Dto();
 //        Function1Dto noise = new Function1Dto();
 //        noise.setFilename(noiseFileName);
 //        noise.setContext(null);
 //        noise.setAudio(getAudioFileUrl(noiseFileName, FUNC1));
 //        return noise;
-    }
+//    }
 
     // for func2
-    public List<Function2Dto> getAudioInfo(Function2Dto dto) {
-        return new ArrayList<>();
+//    public List<Function2Dto> getAudioInfo(Function2Dto dto) {
+//        return new ArrayList<>();
 //        List<Function2Dto> result = func2Dao.getAudioInfo(dto);
 //        for (Function2Dto function2Dto : result) {
 //            try {
@@ -104,11 +106,11 @@ public class AudioInfoService {
 //        }
 //
 //        return result;
-    }
+//    }
 
     // for func3
-    public List<Function3Dto> getAudioInfo(Function3Dto dto) {
-        return new ArrayList<>();
+//    public List<Function3Dto> getAudioInfo(Function3Dto dto) {
+//        return new ArrayList<>();
 //        List<Function3Dto> result = func3Dao.getAudioInfo(dto);
 //        for (Function3Dto function3Dto : result) {
 //            try {
@@ -122,11 +124,11 @@ public class AudioInfoService {
 //        }
 //
 //        return result;
-    }
+//    }
 
     // for func4
-    public List<Function4Dto> getAudioInfo(String index) {
-        return new ArrayList<>();
+//    public List<Function4Dto> getAudioInfo(String index) {
+//        return new ArrayList<>();
 //        List<Function4Dto> data = func4Dao.getAudioInfo(index);
 //
 //        List<String> fileNames = new ArrayList<String>();
@@ -156,15 +158,15 @@ public class AudioInfoService {
 //        } catch (IOException e) {
 //            throw new RuntimeException(e);
 //        }
-    }
+//    }
 
-    public List<Function4Dto> getFirstInfo(Function4Dto dto) {
-        return new ArrayList<>();
+//    public List<Function4Dto> getFirstInfo(Function4Dto dto) {
+//        return new ArrayList<>();
 //        return func4Dao.getFirstInfo(dto);
-    }
+//    }
 
-    public Function5Dto getAudioInfo(Function5Dto dto) {
-        return new Function5Dto();
+//    public Function5Dto getAudioInfo(Function5Dto dto) {
+//        return new Function5Dto();
 //        Function5Dto result = func5Dao.loadFile(dto);
 //
 //        Map<String,String> temp = new HashMap<>();
@@ -177,7 +179,7 @@ public class AudioInfoService {
 //        result.setCnt(audioName.size() / 4);
 //
 //        return result;
-    }
+//    }
 
     private String getAudioFileUrl(String filename, String filePath) {
         try {
