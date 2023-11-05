@@ -1,4 +1,4 @@
-package kr.co.ihab.speechear.api.dto.security;
+package kr.co.ihab.speechear.api.domain.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

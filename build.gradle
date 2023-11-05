@@ -45,8 +45,8 @@ subprojects {
 }
 
 project(':api') {
-    bootJar.enabled = false
-    jar.enabled = true
+    bootJar.enabled = true
+    jar.enabled = false
     dependencies {
         implementation project(":generated-jooq")
     }

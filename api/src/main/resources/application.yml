@@ -58,6 +58,8 @@ logging:
     root: info
     jooq: debug
     kr.co.ihab.speechear: debug
+jwt:
+  secretKey: 'secret'
 
 ###############################################################################
 # LOCAL Profile                                                               #

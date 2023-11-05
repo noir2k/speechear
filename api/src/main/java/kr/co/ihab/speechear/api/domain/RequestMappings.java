@@ -3,6 +3,8 @@ package kr.co.ihab.speechear.api.domain;
 public class RequestMappings {
     public static final String API = "/api";
     public static final String AUTH = API + "/auth";
+    public static final String SIGNIN = AUTH + "/signin";
+    public static final String SIGNUP = AUTH + "/signup";
     public static final String USER = API + "/user";
     public static final String TRAINING = API + "/training";
     public static final String PART_1 = TRAINING + "/part1";

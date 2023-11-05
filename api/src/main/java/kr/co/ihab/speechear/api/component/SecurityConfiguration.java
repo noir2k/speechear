@@ -1,5 +1,8 @@
 package kr.co.ihab.speechear.api.component;
 
+import kr.co.ihab.speechear.api.component.filter.JwtAuthenticationFilter;
+import kr.co.ihab.speechear.api.domain.RequestMappings;
+import kr.co.ihab.speechear.api.domain.auth.UserDetailServiceImpl;
 import kr.co.ihab.speechear.api.enums.UserRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -17,9 +20,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -29,10 +32,9 @@ import java.util.Collections;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@Order(0)
 @Log4j2
 public class SecurityConfiguration {
-    private final UserDetailsService userDetailsService;
+    private final UserDetailServiceImpl userDetailService;
     private final JwtTokenComponent jwtTokenComponent;
 
 //    private final AuthenticationSuccessHandler authenticationSuccessHandler;
@@ -45,7 +47,7 @@ public class SecurityConfiguration {
 
     @Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+		auth.userDetailsService(userDetailService).passwordEncoder(bCryptPasswordEncoder());
 	}
 
     @Bean
@@ -88,18 +90,19 @@ public class SecurityConfiguration {
                 .sessionManagement((sessionManagement) ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((requests) -> requests
-//                        .requestMatchers("/actuator/**", "/swagger-ui/**", "/api-docs/swagger-config").permitAll()
-                        .requestMatchers("/api/**").permitAll()
-                        .requestMatchers("/","/login","/signUp").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
+                        .requestMatchers(RequestMappings.AUTH+"/**").permitAll()
                         // USER, MANAGER, ADMIN
-                        .requestMatchers("/function/**","/home/**").hasAnyRole(UserRole.USER.toString(), UserRole.MANAGER.toString(), UserRole.SYSTEM.toString())
+                        .requestMatchers(RequestMappings.TRAINING+"/**")
+                            .hasAnyRole(UserRole.USER.toString(), UserRole.MANAGER.toString(), UserRole.SYSTEM.toString())
                         // MANAGER, ADMIN
-                        .requestMatchers("/system/**").hasAnyRole(UserRole.MANAGER.toString(),UserRole.SYSTEM.toString())
+                        .requestMatchers("/system/**")
+                            .hasAnyRole(UserRole.MANAGER.toString(),UserRole.SYSTEM.toString())
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-//                        .anyRequest().authenticated()
-                        .anyRequest().permitAll()
-                );
-//                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenComponent), UsernamePasswordAuthenticationFilter.class);
+                        .anyRequest().authenticated()
+//                        .anyRequest().permitAll()
+                )
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenComponent), UsernamePasswordAuthenticationFilter.class);
 
 //        http.headers().frameOptions().sameOrigin();
 

@@ -3,9 +3,9 @@ package kr.co.ihab.speechear.api.component;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import kr.co.ihab.speechear.api.dto.security.JwtTokenInfo;
-import kr.co.ihab.speechear.api.dto.security.UserDto;
+import kr.co.ihab.speechear.api.domain.auth.JwtTokenInfo;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,17 +15,20 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 @Log4j2
 @Component
 public class JwtTokenComponent {
     public static final String AUTH_HEADER = "Authorization";
-    public static final String TOKEN_TYPE = "BEARER";
+    public static final String TOKEN_TYPE = "Bearer";
     private static final long DAY = 86400000L;
-    //    @Value(value = "${jwt.secretKey}")
-    private static final String jwtSecretKey = "exampleSecretKeyexampleSecretKeyexampleSecretKeyexampleSecretKeyexampleSecretKey";
+
+//    @Value(value = "${jwt.secretKey}")
+    private static String jwtSecretKey = "exampleSecretKeyexampleSecretKeyexampleSecretKeyexampleSecretKeyexampleSecretKey";
     private final Key key;
 
     public JwtTokenComponent() {
@@ -101,17 +104,18 @@ public class JwtTokenComponent {
         }
     }
 
-    private static Map<String, Object> createClaims(UserDto userDto) {
-        Map<String, Object> claims = new HashMap<>();
+//    private static Map<String, Object> createClaims(UserDto userDto) {
+//        Map<String, Object> claims = new HashMap<>();
+//
+//        log.info("userDto :" + userDto.toString());
+//
+//        claims.put("userId", userDto.getId());
+//        claims.put("userName", userDto.getName());
+//        claims.put("userRole", userDto.getRoles());
+//        claims.put("userCellPhone", userDto.getCellphone());
+//        claims.put("userEmail", userDto.getEmail());
+//
+//        return claims;
+//    }
 
-        log.info("userDto :" + userDto.toString());
-
-        claims.put("userId", userDto.getId());
-        claims.put("userName", userDto.getName());
-        claims.put("userRole", userDto.getRoles());
-        claims.put("userCellPhone", userDto.getCellphone());
-        claims.put("userEmail", userDto.getEmail());
-
-        return claims;
-    }
 }
