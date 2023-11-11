@@ -17,13 +17,13 @@ public class RestApiErrorResponse {
     private String message;
     private List<FieldError> errors;
 
-    private RestApiErrorResponse(ErrorCode code, List<FieldError> fieldErrors) {
+    public RestApiErrorResponse(ErrorCode code, List<FieldError> fieldErrors) {
         this.code = code.getCode();
         this.message = code.getMessage();
         this.errors = fieldErrors;
     }
 
-    private RestApiErrorResponse(ErrorCode code) {
+    public RestApiErrorResponse(ErrorCode code) {
         this.code = code.getCode();
         this.message = code.getMessage();
         this.errors = new ArrayList<>();

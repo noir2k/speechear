@@ -2,26 +2,26 @@ package kr.co.ihab.speechear.api.component;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.io.DecodingException;
 import io.jsonwebtoken.security.Keys;
 import kr.co.ihab.speechear.api.domain.auth.JwtTokenInfo;
+import kr.co.ihab.speechear.api.domain.auth.UserDetailServiceImpl;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
 @Log4j2
 @Component
+@RequiredArgsConstructor
 public class JwtTokenComponent {
     public static final String AUTH_HEADER = "Authorization";
     public static final String TOKEN_TYPE = "Bearer";
@@ -30,6 +30,9 @@ public class JwtTokenComponent {
 //    @Value(value = "${jwt.secretKey}")
     private static String jwtSecretKey = "exampleSecretKeyexampleSecretKeyexampleSecretKeyexampleSecretKeyexampleSecretKey";
     private final Key key;
+
+    @Autowired
+    private UserDetailServiceImpl userDetailService;
 
     public JwtTokenComponent() {
         byte[] keyBytes = Decoders.BASE64.decode(jwtSecretKey);
@@ -71,13 +74,14 @@ public class JwtTokenComponent {
             throw new RuntimeException("Invalid Authorization Token");
         }
 
-        Collection<? extends GrantedAuthority> authorities =
-                Arrays.stream(claims.get("auth").toString().split(","))
-                        .map(SimpleGrantedAuthority::new)
-                        .collect(Collectors.toList());
+//        Collection<? extends GrantedAuthority> authorities =
+//                Arrays.stream(claims.get("auth").toString().split(","))
+//                        .map(SimpleGrantedAuthority::new)
+//                        .collect(Collectors.toList());
 
-        UserDetails principal = new User(claims.getSubject(), "", authorities);
-        return new UsernamePasswordAuthenticationToken(principal, "", authorities);
+        UserDetails userDetails = userDetailService.loadUserByUsername(claims.getSubject());
+        //new User(claims.getSubject(), "", authorities);
+        return new UsernamePasswordAuthenticationToken(userDetails, accessToken, userDetails.getAuthorities());
     }
 
     public boolean validateToken(String token) {
@@ -91,7 +95,9 @@ public class JwtTokenComponent {
         } catch (UnsupportedJwtException e) {
             log.info("Unsupported JWT Token", e);
         } catch (IllegalArgumentException e) {
-            log.info("JWT claims string is empty.", e);
+            log.info("JWT claims string is empty", e);
+        } catch (DecodingException e) {
+            log.info("Decoding Error", e);
         }
         return false;
     }

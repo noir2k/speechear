@@ -6,6 +6,9 @@ public class RequestMappings {
     public static final String SIGNIN = AUTH + "/signin";
     public static final String SIGNUP = AUTH + "/signup";
     public static final String USER = API + "/user";
+    public static final String USER_INFO = USER + "/info";
+    public static final String USER_UPDATE_INFO = USER_INFO + "/update";
+    public static final String USER_UPDATE_PASSWORD = USER_INFO + "/password";
     public static final String TRAINING = API + "/training";
     public static final String PART_1 = TRAINING + "/part1";
     public static final String CHAPTER_1 = PART_1 + "/chapter";

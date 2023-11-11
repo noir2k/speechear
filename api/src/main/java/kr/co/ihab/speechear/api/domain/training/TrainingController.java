@@ -16,10 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TrainingController {
     private final TrainingService trainingService;
-    @GetMapping(value = "/ok")
-    public ResponseEntity<String> ok() {
-        return new ResponseEntity<>("OK", HttpStatus.OK);
-    }
 
     @GetMapping(value = RequestMappings.LIST_1)
     public ResponseEntity<FunctionListDTO<String, Function1ResultDTO>> List_1(

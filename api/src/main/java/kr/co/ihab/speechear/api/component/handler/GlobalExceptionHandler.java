@@ -1,6 +1,7 @@
 package kr.co.ihab.speechear.api.component.handler;
 
 import kr.co.ihab.speechear.api.component.exception.RestApiErrorResponse;
+import kr.co.ihab.speechear.api.component.exception.RestApiException;
 import kr.co.ihab.speechear.api.enums.CommonErrorCode;
 import kr.co.ihab.speechear.api.interfaces.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler(RestApiException.class)
+    protected ResponseEntity<RestApiErrorResponse> handleException(RestApiException e) {
+        log.error(e.getMessage(), e);
+        ErrorCode errorCode = e.getErrorCode();
+        return handleExceptionInternal(errorCode);
+    }
+
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<RestApiErrorResponse> handleException(Exception e) {
         log.error(e.getMessage(), e);
@@ -38,6 +47,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    private ResponseEntity<RestApiErrorResponse> handleExceptionInternal(ErrorCode errorCode) {
+        return ResponseEntity
+                .status(errorCode.getHttpStatus().value())
+                .body(new RestApiErrorResponse(errorCode));
+    }
     private ResponseEntity<Object> handleExceptionInternal(
             Exception e, ErrorCode errorCode, WebRequest request) {
         log.error(e.getMessage(), e);
